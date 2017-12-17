@@ -1,0 +1,51 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms" x:Class="EventRiteComposer.ScriptStatement" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" Width="440" AllowDrop="True" DragEnter="UserControl_DragEnter" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}">
+    <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Margin="0,10,0,-10">
+        <Ellipse Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="28" Margin="2,2,0,0" Stroke="Black" VerticalAlignment="Top" Width="28"/>
+        <Button Content="Next" HorizontalAlignment="Left" Margin="250,124,0,0" VerticalAlignment="Top" Width="75" MinWidth="78" MinHeight="78">
+            <Button.Background>
+                <ImageBrush ImageSource="/EventRiteComposer;component/Resources/Icons/next.png"/>
+            </Button.Background>
+        </Button>
+        <CheckBox x:Name="CheckBoxFadeIn" Content="Fade In" HorizontalAlignment="Left" Margin="345,165,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="CheckBoxFadeOut" Content="FadeOut" HorizontalAlignment="Left" Margin="345,144,0,0" VerticalAlignment="Top"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="26" Margin="85,4,0,0" VerticalAlignment="Top" Width="280"/>
+        <TextBlock HorizontalAlignment="Left" Margin="103,10,0,0" TextWrapping="Wrap" Text="Name Of Statement" VerticalAlignment="Top" FontFamily="Goudy Stout" FontStyle="Italic" TextDecorations="{x:Null}" TextAlignment="Center"/>
+        <Button Content="Stop" HorizontalAlignment="Left" Margin="170,124,0,0" VerticalAlignment="Top" Width="75" MinWidth="78" MinHeight="78">
+            <Button.Background>
+                <ImageBrush ImageSource="/EventRiteComposer;component/Resources/Icons/stop.png"/>
+            </Button.Background>
+        </Button>
+        <Button Content="" HorizontalAlignment="Left" Margin="90,124,0,0" VerticalAlignment="Top" Width="78" Height="78" MinWidth="78" MinHeight="78">
+            <Button.Background>
+                <ImageBrush ImageSource="/EventRiteComposer;component/Resources/Icons/play.png" Stretch="UniformToFill"/>
+            </Button.Background>
+        </Button>
+        <Button Content="Prev" HorizontalAlignment="Left" Margin="10,124,0,0" VerticalAlignment="Top" Width="75" MinWidth="78" MinHeight="78">
+            <Button.Background>
+                <ImageBrush ImageSource="/EventRiteComposer;component/Resources/Icons/rewind.png"/>
+            </Button.Background>
+        </Button>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" FontFamily="Elephant" TextDecorations="{x:Null}" TextAlignment="Center" FontSize="22" Margin="10,2,0,0"/>
+        <Expander x:Name="ExpanderAudio" Header="Expander" HorizontalAlignment="Left" Margin="2,37,0,0" VerticalAlignment="Top" IsExpanded="True" Width="428" Height="82" BorderBrush="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}">
+            <Grid HorizontalAlignment="Left" Margin="10,0,0,0">
+                <TextBlock HorizontalAlignment="Left" Margin="15,40,0,0" TextWrapping="Wrap" Text="Audio" VerticalAlignment="Top" RenderTransformOrigin="0.456,0.501"/>
+                <TextBox x:Name="InputAudioFile" HorizontalAlignment="Left" Height="23" Margin="47,24,-115,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="223"/>
+                <Button x:Name="ButtonSelectAudioFile" Content="" HorizontalAlignment="Left" Margin="275,35,-135,0" VerticalAlignment="Top" Width="15" Click="ButtonSelectAudioFile_Click" Height="12" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" ToolTip="Select Audio File"/>
+                <Image HorizontalAlignment="Left" Height="43" Margin="10,10,0,0" VerticalAlignment="Top" Width="32" Source="/EventRiteComposer;component/Resources/Icons/audio_file.png" Drop="Image_Drop" DragEnter="Image_DragEnter"/>
+                <TextBlock x:Name="TextBlockAudioFileName" HorizontalAlignment="Left" Margin="47,10,-135,0" TextWrapping="Wrap" Text="кириллица" VerticalAlignment="Top" Width="243" AllowDrop="False" FontFamily="Global Monospace">
+                    <TextBlock.Effect>
+                        <DropShadowEffect BlurRadius="2" Opacity="0.25" ShadowDepth="2"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+            </Grid>
+        </Expander>
+
+    </Grid>
+</UserControl>

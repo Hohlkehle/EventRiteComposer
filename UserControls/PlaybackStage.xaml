@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="EventRiteComposer.PlaybackStage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Height="96" Width="146" Unloaded="UserControl_Unloaded" Loaded="UserControl_Loaded">
+
+    <Grid Drop="Grid_Drop" DragEnter="Grid_DragEnter" AllowDrop="True" MouseDown="Grid_MouseDown" MouseLeave="Border_MouseLeave" >
+        <Border x:Name="Border" BorderThickness="1" CornerRadius="0,0,0,0" BorderBrush="#FF5B54B8" MouseEnter="Grid_MouseEnter">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform Angle="-40.236" CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#FF5B54B8" Offset="0.008"/>
+                    <GradientStop Color="#FF337FCB" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <CheckBox x:Name="CheckBoxStopOther" Content="Stop other" Margin="44,9,20,71" IsChecked="True" Foreground="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" FontSize="9"/>
+
+        </Border>
+
+        <Button x:Name="ButtonSelectAudioFile" Content="" HorizontalAlignment="Left" Margin="18,70,0,0" Width="15" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" ToolTip="Select Audio File" Height="15" VerticalAlignment="Top" Visibility="Hidden"/>
+        <Image x:Name="ImageAudio" HorizontalAlignment="Left" Height="36" Margin="10,10,0,0" VerticalAlignment="Top" Width="32" Source="/EventRiteComposer;component/Resources/Icons/soundforge2_icon.jpg" Opacity="0.105">
+            <Image.Style>
+                <Style TargetType="{x:Type Image}">
+                    <Setter Property="Source" Value="/EventRiteComposer;component/Resources/Icons/audio_file.png"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Source" Value="/EventRiteComposer;component/Resources/Icons/audio_file.png" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+
+        </Image>
+        <Ellipse Margin="106,5,6,57" Stroke="Black" Visibility="Hidden">
+            <Ellipse.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="{DynamicResource {x:Static SystemColors.ActiveCaptionColorKey}}" Offset="0"/>
+                    <GradientStop Color="{DynamicResource {x:Static SystemColors.HotTrackColorKey}}" Offset="1"/>
+                </LinearGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <Border BorderThickness="1" Margin="105,10,6,54" BorderBrush="#FF382FA0"/>
+        <TextBlock x:Name="OrderId" TextWrapping="Wrap" Text="20" VerticalAlignment="Top" FontFamily="Elephant" TextDecorations="{x:Null}" TextAlignment="Center" FontSize="22" Margin="105,13,6,0" Height="24" RenderTransformOrigin="0.5,0.5" Foreground="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}">
+            <TextBlock.Effect>
+                <DropShadowEffect ShadowDepth="2" Opacity="0.6"/>
+            </TextBlock.Effect>
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="0.843"/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="0.11"/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+        <TextBlock x:Name="TextBlockAudioFileName" TextWrapping="Wrap" VerticalAlignment="Top" AllowDrop="True" Height="39" Text="Not set" Foreground="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" HorizontalAlignment="Left" Width="126" Margin="10,47,0,0" FontSize="10" FontFamily="Verdana" FontWeight="Bold"/>
+        <Image x:Name="ImageVideo" HorizontalAlignment="Left" Height="36" Margin="10,10,0,0" VerticalAlignment="Top" Width="32" Source="/EventRiteComposer;component/Resources/Icons/AppIcon.png" Opacity="0.1">
+            <Image.Style>
+                <Style TargetType="{x:Type Image}">
+                    <Setter Property="Source" Value="/EventRiteComposer;component/Resources/Icons/video_file.png"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Source" Value="/EventRiteComposer;component/Resources/Icons/video_file.png" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+
+        </Image>
+
+
+
+    </Grid>
+</UserControl>

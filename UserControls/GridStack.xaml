@@ -1,0 +1,49 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EventRiteComposer" x:Name="Grid1" x:Class="EventRiteComposer.GridStack" 
+             mc:Ignorable="d" Height="304" Width="765">
+    <Grid Margin="0,0,0,0" x:Name="GridStackPanel">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <local:PlaybackStage HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center" StackId="1" local:PlaybackStage.KeyName="D1"/>
+        <local:PlaybackStage HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center" StackId="2" local:PlaybackStage.KeyName="D2" Grid.Column="1"/>
+        <local:PlaybackStage HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center" StackId="3" local:PlaybackStage.KeyName="D3" Grid.Column="2"/>
+        <local:PlaybackStage HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center" StackId="4" local:PlaybackStage.KeyName="D4" Grid.Column="3"/>
+        <local:PlaybackStage HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center" StackId="5" local:PlaybackStage.KeyName="D5" Grid.Column="4"/>
+
+        <local:PlaybackStage HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center" StackId="6" local:PlaybackStage.KeyName="D6" Grid.Row="1"/>
+        <local:PlaybackStage HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center" StackId="7" local:PlaybackStage.KeyName="D7" Grid.Row="1" Grid.Column="1"/>
+        <local:PlaybackStage HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center" StackId="8" local:PlaybackStage.KeyName="D8" Grid.Row="1" Grid.Column="2"/>
+        <local:PlaybackStage HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center" StackId="9" local:PlaybackStage.KeyName="D9" Grid.Row="1" Grid.Column="3"/>
+        <local:PlaybackStage HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center" StackId="10" local:PlaybackStage.KeyName="D0" Grid.Row="1" Grid.Column="4"/>
+
+        <local:PlaybackStage HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center" StackId="11" local:PlaybackStage.KeyName="NumPad1" Grid.Row="2"/>
+        <local:PlaybackStage HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center" StackId="12" local:PlaybackStage.KeyName="NumPad2" Grid.Row="2" Grid.Column="1"/>
+        <local:PlaybackStage HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center" StackId="13" local:PlaybackStage.KeyName="NumPad3" Grid.Row="2" Grid.Column="2"/>
+        <local:PlaybackStage HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center" StackId="14" local:PlaybackStage.KeyName="NumPad4" Grid.Row="2" Grid.Column="3"/>
+        <local:PlaybackStage HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center" StackId="15" local:PlaybackStage.KeyName="NumPad5" Grid.Row="2" Grid.Column="4"/>
+
+        <local:PlaybackStage HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center" StackId="16" local:PlaybackStage.KeyName="NumPad6" Grid.Row="3"/>
+        <local:PlaybackStage HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center" StackId="17" local:PlaybackStage.KeyName="NumPad7" Grid.Row="3" Grid.Column="1"/>
+        <local:PlaybackStage HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center" StackId="18" local:PlaybackStage.KeyName="NumPad8" Grid.Row="3" Grid.Column="2"/>
+        <local:PlaybackStage HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center" StackId="19" local:PlaybackStage.KeyName="NumPad9" Grid.Row="4" Grid.Column="3"/>
+        <local:PlaybackStage HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center" StackId="20" local:PlaybackStage.KeyName="NumPad0" Grid.Row="5" Grid.Column="4"/>
+
+    </Grid>
+</UserControl>
