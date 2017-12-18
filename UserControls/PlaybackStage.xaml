@@ -21,7 +21,7 @@
                     <GradientStop Color="#FF337FCB" Offset="1"/>
                 </LinearGradientBrush>
             </Border.Background>
-            <CheckBox x:Name="CheckBoxStopOther" Content="Stop other" Margin="44,9,20,71" IsChecked="True" Foreground="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" FontSize="9"/>
+            <CheckBox x:Name="CheckBoxStopOther" Content="Exclusive" Margin="44,9,20,71" IsChecked="True" Foreground="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" FontSize="9"/>
 
         </Border>
 
@@ -39,6 +39,19 @@
             </Image.Style>
 
         </Image>
+        <Image x:Name="ImageNone" HorizontalAlignment="Left" Height="36" Margin="10,10,0,0" VerticalAlignment="Top" Width="32" Source="/EventRiteComposer;component/Resources/Icons/no-icon.png" Opacity="0.105">
+            <Image.Style>
+                <Style TargetType="{x:Type Image}">
+                    <Setter Property="Source" Value="/EventRiteComposer;component/Resources/Icons/no-icon.png"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Source" Value="/EventRiteComposer;component/Resources/Icons/no-icon.png" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+
+        </Image>
         <Ellipse Margin="106,5,6,57" Stroke="Black" Visibility="Hidden">
             <Ellipse.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -48,7 +61,7 @@
             </Ellipse.Fill>
         </Ellipse>
         <Border BorderThickness="1" Margin="105,10,6,54" BorderBrush="#FF382FA0"/>
-        <TextBlock x:Name="OrderId" TextWrapping="Wrap" Text="20" VerticalAlignment="Top" FontFamily="Elephant" TextDecorations="{x:Null}" TextAlignment="Center" FontSize="22" Margin="105,13,6,0" Height="24" RenderTransformOrigin="0.5,0.5" Foreground="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}">
+        <TextBlock x:Name="OrderId" TextWrapping="Wrap" Text="20" VerticalAlignment="Top" FontFamily="Elephant" TextDecorations="{x:Null}" TextAlignment="Center" FontSize="22" Margin="105,13,6,0" Height="24" RenderTransformOrigin="0.5,0.5" Foreground="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" FontWeight="Bold">
             <TextBlock.Effect>
                 <DropShadowEffect ShadowDepth="2" Opacity="0.6"/>
             </TextBlock.Effect>
@@ -61,7 +74,7 @@
                 </TransformGroup>
             </TextBlock.RenderTransform>
         </TextBlock>
-        <TextBlock x:Name="TextBlockAudioFileName" TextWrapping="Wrap" VerticalAlignment="Top" AllowDrop="True" Height="39" Text="Not set" Foreground="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" HorizontalAlignment="Left" Width="126" Margin="10,47,0,0" FontSize="10" FontFamily="Verdana" FontWeight="Bold"/>
+        <TextBlock x:Name="TextBlockAudioFileName" TextWrapping="Wrap" VerticalAlignment="Top" AllowDrop="True" Height="49" Text="Not set" Foreground="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" HorizontalAlignment="Left" Width="135" Margin="5,44,0,0" FontFamily="Verdana" FontWeight="Bold"/>
         <Image x:Name="ImageVideo" HorizontalAlignment="Left" Height="36" Margin="10,10,0,0" VerticalAlignment="Top" Width="32" Source="/EventRiteComposer;component/Resources/Icons/AppIcon.png" Opacity="0.1">
             <Image.Style>
                 <Style TargetType="{x:Type Image}">

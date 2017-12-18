@@ -68,6 +68,9 @@ namespace EventRiteComposer
             IniFileInit();
             m_Preferences = new Preferences(iniFile);
 
+            var asName = typeof(MainWindow).Assembly.GetName();
+            Title = String.Format("{0} v{1}b", asName.Name, asName.Version);
+
             PlaybackStage.OnPlay += PlaybackStage_OnPlay;
 
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();

@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Ccard3dev-Dynamic-Yosemite-Utilities-Boot-Camp-Assistant.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="NAudio, Version=1.8.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\NAudio.1.8.4\lib\net35\NAudio.dll</HintPath>
@@ -66,6 +69,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Core\AudioPlayer.cs" />
+    <Compile Include="Core\CommandHelper.cs" />
     <Compile Include="Core\IPlayable.cs" />
     <Compile Include="Core\PlaybackManager.cs" />
     <Compile Include="Core\ScreenHandler.cs" />
@@ -245,6 +249,15 @@
     <Resource Include="Resources\Icons\button-pause-icon.png" />
     <Resource Include="Resources\Icons\button-play-icon.png" />
     <Resource Include="Resources\Icons\button-stop-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\no-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Ccard3dev-Dynamic-Yosemite-Utilities-Boot-Camp-Assistant.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Toolbar-Regular-Delete-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

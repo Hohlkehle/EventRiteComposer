@@ -23,7 +23,6 @@ namespace EventRiteComposer
     /// </summary>
     public partial class VideoPlaybackWindow : Window
     {
-        static string[] videoExtensions = { ".AVI", ".MP4", ".DIVX", ".WMV" };
         public static VideoPlaybackWindow instance;
         private static int attemptsCount = 0;
         public event EventHandler OnVolumeValueChanged;
@@ -56,6 +55,11 @@ namespace EventRiteComposer
             get { return mePlayer != null ? mePlayer.Volume : 0.5; }
         }
 
+        internal void Pause()
+        {
+            mePlayer?.Pause();
+        }
+
         public bool IsFullScreen
         {
             get { return m_IsFullScreen = this.WindowState == System.Windows.WindowState.Maximized; }
@@ -74,6 +78,10 @@ namespace EventRiteComposer
         }
 
         public MediaState CurrentState { get { return GetMediaState(mePlayer); } }
+
+        public bool IsPlaying { get { return mePlayer == null ? false : CurrentState == MediaState.Play; } }
+
+        public MediaElement VideoPlayer { get { return mePlayer; } }
 
         public VideoPlaybackWindow()
         {
@@ -274,7 +282,7 @@ namespace EventRiteComposer
                     // Extract the data from the DataObject-Container into a string list
                     string[] fileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
 
-                    if (IsVideoFile(fileList[0]))
+                    if (CommandHelper.IsVideoFile(fileList[0]))
                     {
                         LoadVideoFileFromDrop(fileList[0]);
 
@@ -288,11 +296,6 @@ namespace EventRiteComposer
             }
             else
             { }
-        }
-
-        public bool IsVideoFile(string path)
-        {
-            return videoExtensions.Contains(System.IO.Path.GetExtension(path), StringComparer.OrdinalIgnoreCase);
         }
 
         private void LoadVideoFileFromDrop(string file)
@@ -384,7 +387,7 @@ namespace EventRiteComposer
 
         private void Player_MediaFailed(object sender, ExceptionRoutedEventArgs e)
         {
-            if (!e.Handled && !string.IsNullOrEmpty(VideoFile) && attemptsCount < 2)
+            if (!e.Handled && !string.IsNullOrEmpty(VideoFile) && attemptsCount < 5)
             {
                 e.Handled = true;
                 attemptsCount++;

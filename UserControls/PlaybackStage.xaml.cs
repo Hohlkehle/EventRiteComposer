@@ -72,8 +72,6 @@ namespace EventRiteComposer
 
                     TextBlockAudioFileName.Text = System.IO.Path.GetFileNameWithoutExtension(PlaybackInfo.MediaFilePath);
 
-                    ImageAudio.Opacity = 100d;
-                    ImageVideo.Opacity = 0d;
                 }
                 else if (m_StageType == StageType.Video)
                 {
@@ -81,17 +79,13 @@ namespace EventRiteComposer
                     //videoPlayer.StageType = StageType.Video;
 
                     TextBlockAudioFileName.Text = System.IO.Path.GetFileNameWithoutExtension(PlaybackInfo.MediaFilePath);
-
-
-                    ImageVideo.Opacity = 100d;
-                    ImageAudio.Opacity = 0d;
                 }
                 else
                 {
                     TextBlockAudioFileName.Text = "Error: Unsuported format!";
-                    ImageAudio.Opacity = 0d;
-                    ImageVideo.Opacity = 0d;
                 }
+
+                InvalidateStageState();
             }
         }
 
@@ -119,10 +113,6 @@ namespace EventRiteComposer
             {
                 m_PlaybackInfo = value;
                 stageType = m_PlaybackInfo.StageType;
-                if (m_PlaybackInfo.StageType == StageType.Audio)
-                {
-                    audioPlayer = m_PlaybackInfo;
-                }
 
                 PlaybackManager = new PlaybackManager(PlaybackInfo);
             }
@@ -160,7 +150,9 @@ namespace EventRiteComposer
 
             OnPlay += (PlaybackStage sender, PlaybackStageEventArgs e) =>
             {
-                if (sender != this && sender.IsStopOthers && PlaybackManager.IsPlaying)
+                if (sender != this && sender.IsStopOthers && IsStopOthers && PlaybackManager.IsPlaying)
+                    Stop();
+                else if (sender != this && (sender.IsStopOthers || sender.PlaybackInfo.StageType == StageType.Video) && PlaybackInfo.StageType == StageType.Video && PlaybackManager.IsPlaying)
                     Stop();
             };
 
@@ -242,7 +234,7 @@ namespace EventRiteComposer
 
         void LoadFileToStack(string file)
         {
-            if (IsAudioFile(file))
+            if (CommandHelper.IsAudioFile(file))
             {
                 var pi = new PlaybackInfo(StackId) {
                     MediaFilePath = file,
@@ -253,31 +245,30 @@ namespace EventRiteComposer
                 TextBlockAudioFileName.Text = System.IO.Path.GetFileNameWithoutExtension(file);
                 stageType = PlaybackStage.StageType.Audio;
                 audioPlayer.MediaFilePath = audioFile = file;
-                ImageAudio.Opacity = 100d;
-                ImageVideo.Opacity = 0d;
+
             }
-            else if (IsVideoFile(file))
+            else if (CommandHelper.IsVideoFile(file))
             {
                 var pi = new PlaybackInfo(StackId)
                 {
                     MediaFilePath = file,
-                    StageType = StageType.Audio
+                    StageType = StageType.Video
                 };
                 PlaybackInfo = pi;
 
                 TextBlockAudioFileName.Text = System.IO.Path.GetFileNameWithoutExtension(file);
                 stageType = PlaybackStage.StageType.Video;
                 videoPlayer.MediaFilePath = videoFile = file;
-                ImageVideo.Opacity = 100d;
-                ImageAudio.Opacity = 0d;
+
             }
             else
             {
                 TextBlockAudioFileName.Text = "Error: Unsuported format!";
                 PlaybackInfo.StageType = StageType.None;
-                ImageAudio.Opacity = 0d;
-                ImageVideo.Opacity = 0d;
+
             }
+
+            InvalidateStageState();
 
             //InputAudioFile.Text = fileList[0];
             // For example add all files into a simple label control:
@@ -285,7 +276,27 @@ namespace EventRiteComposer
             //    this.DropLocationLabel.Content += File + "\n";
         }
 
-
+        private void InvalidateStageState()
+        {
+            switch (stageType)
+            {
+                case StageType.None:
+                    ImageAudio.Opacity = 0d;
+                    ImageVideo.Opacity = 0d;
+                    ImageNone.Opacity = 100d;
+                    break;
+                case StageType.Audio:
+                    ImageAudio.Opacity = 100d;
+                    ImageVideo.Opacity = 0d;
+                    ImageNone.Opacity = 0d;
+                    break;
+                case StageType.Video:
+                    ImageVideo.Opacity = 100d;
+                    ImageAudio.Opacity = 0d;
+                    ImageNone.Opacity = 0d;
+                    break;
+            }
+        }
 
         public void Play()
         {
@@ -332,29 +343,14 @@ namespace EventRiteComposer
 
             ///System.Windows.SystemColors.MenuHighlightBrush;
         }
-
-        public bool IsAudioFile(string path)
-        {
-            return audioExtensions.Contains(System.IO.Path.GetExtension(path), StringComparer.OrdinalIgnoreCase);
-        }
-
-        public bool IsVideoFile(string path)
-        {
-            return videoExtensions.Contains(System.IO.Path.GetExtension(path), StringComparer.OrdinalIgnoreCase);
-        }
-
-        public bool IsImageFile(string path)
-        {
-            return imageExtensions.Contains(System.IO.Path.GetExtension(path), StringComparer.OrdinalIgnoreCase);
-        }
-
+        
         void PlaybackStage_OnStateChanged(PlaybackStage sender, PlaybackStageEventArgs e)
         {
             if (sender == this)
             { }
             else if (playbackState == PlaybackState.Playing && sender.playbackState == PlaybackState.Playing && sender.CheckBoxStopOther.IsChecked.Value == true)
             {
-                Stop();
+                //Stop();
             }
         }
 
@@ -390,7 +386,7 @@ namespace EventRiteComposer
 
                 foreach (string file in FileList)
                 {
-                    if (IsAudioFile(file) || IsVideoFile(file))
+                    if (CommandHelper.IsAudioFile(file) || CommandHelper.IsVideoFile(file))
                     {
                         Border.BorderBrush.Opacity = 100d;
                     }
