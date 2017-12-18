@@ -79,7 +79,7 @@ namespace EventRiteComposer
         private void PlaybackStage_OnPlay(PlaybackStage sender, PlaybackStageEventArgs e)
         {
             if (String.IsNullOrEmpty(sender.PlaybackInfo.MediaFilePath) || !System.IO.File.Exists(sender.PlaybackInfo.MediaFilePath))
-                return; 
+                return;
 
             TextBlockTrackTitle.Text = string.Format("{0}", System.IO.Path.GetFileName(sender.PlaybackInfo.MediaFilePath));
         }
@@ -236,18 +236,28 @@ namespace EventRiteComposer
         #region Window Drag
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Middle)
+            if (!Properties.Settings.Default.WindowDrag)
             {
-                this.CaptureMouse();
-                this.m_IsDragInProgress = true;
-                // 
-                this.m_FormMousePosition = e.GetPosition((UIElement)this);
+                base.OnMouseDown(e);
+                return;
             }
+            if (e.ChangedButton == MouseButton.Left)
+                {
+                    this.CaptureMouse();
+                    this.m_IsDragInProgress = true;
+                    // 
+                    this.m_FormMousePosition = e.GetPosition((UIElement)this);
+                }
             base.OnMouseDown(e);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
+            if (!Properties.Settings.Default.WindowDrag)
+            {
+                base.OnMouseMove(e);
+                return;
+            }
             if (!this.m_IsDragInProgress)
                 return;
 
@@ -262,7 +272,13 @@ namespace EventRiteComposer
 
         protected override void OnMouseUp(MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Middle)
+            if (!Properties.Settings.Default.WindowDrag)
+            {
+                base.OnMouseUp(e);
+                return;
+            }
+
+            if (e.ChangedButton == MouseButton.Left)
             {
                 this.m_IsDragInProgress = false;
                 this.ReleaseMouseCapture();
@@ -450,5 +466,10 @@ namespace EventRiteComposer
         }
 
         public static bool isInitialized { get; set; }
+
+        private void GridStack1_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -68,6 +68,7 @@
     <Compile Include="Core\AudioPlayer.cs" />
     <Compile Include="Core\IPlayable.cs" />
     <Compile Include="Core\PlaybackManager.cs" />
+    <Compile Include="Core\ScreenHandler.cs" />
     <Compile Include="Core\VideoPlayer.cs" />
     <Compile Include="Data\AudioProgressDataProvider.cs" />
     <Compile Include="Data\DefWindowKeys.cs" />
@@ -108,6 +109,9 @@
     <Compile Include="Data\Preferences.cs" />
     <Compile Include="UserControls\ScriptStatement.xaml.cs">
       <DependentUpon>ScriptStatement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VideoPlaybackWindow.xaml.cs">
+      <DependentUpon>VideoPlaybackWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="VlcPlayer.cs" />
     <Compile Include="Windows\OptionsWindow.xaml.cs">
@@ -154,6 +158,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ScriptStatement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VideoPlaybackWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

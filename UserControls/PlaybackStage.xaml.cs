@@ -244,18 +244,29 @@ namespace EventRiteComposer
         {
             if (IsAudioFile(file))
             {
+                var pi = new PlaybackInfo(StackId) {
+                    MediaFilePath = file,
+                    StageType = StageType.Audio
+                };
+                PlaybackInfo = pi;
+
                 TextBlockAudioFileName.Text = System.IO.Path.GetFileNameWithoutExtension(file);
                 stageType = PlaybackStage.StageType.Audio;
-                PlaybackInfo.StageType = StageType.Audio;
                 audioPlayer.MediaFilePath = audioFile = file;
                 ImageAudio.Opacity = 100d;
                 ImageVideo.Opacity = 0d;
             }
             else if (IsVideoFile(file))
             {
+                var pi = new PlaybackInfo(StackId)
+                {
+                    MediaFilePath = file,
+                    StageType = StageType.Audio
+                };
+                PlaybackInfo = pi;
+
                 TextBlockAudioFileName.Text = System.IO.Path.GetFileNameWithoutExtension(file);
                 stageType = PlaybackStage.StageType.Video;
-                PlaybackInfo.StageType = StageType.Video;
                 videoPlayer.MediaFilePath = videoFile = file;
                 ImageVideo.Opacity = 100d;
                 ImageAudio.Opacity = 0d;
@@ -460,10 +471,10 @@ namespace EventRiteComposer
                 MessageBox.Show(ex.Message, "PlaybackStage");
             }
 
-            if (audioPlayer.StageType == StageType.Audio && audioPlayer != null && !String.IsNullOrEmpty(audioPlayer.MediaFilePath))
+            if (audioPlayer != null && audioPlayer.StageType == StageType.Audio && audioPlayer != null && !String.IsNullOrEmpty(audioPlayer.MediaFilePath))
                 LoadFileToStack(audioPlayer.MediaFilePath);
 
-            if (videoPlayer.StageType == StageType.Video && videoPlayer != null && !String.IsNullOrEmpty(videoPlayer.MediaFilePath))
+            if (videoPlayer != null && videoPlayer.StageType == StageType.Video && videoPlayer != null && !String.IsNullOrEmpty(videoPlayer.MediaFilePath))
                 LoadFileToStack(videoPlayer.MediaFilePath);
         }
 
