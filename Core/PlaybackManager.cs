@@ -16,13 +16,17 @@ namespace EventRiteComposer.Core
         public PlaybackInfo PlaybackInfo { get => m_PlaybackInfo; set => m_PlaybackInfo = value; }
         public bool IsPlaying { get { return m_Player.IsPlaying; } }
 
-        public PlaybackManager(PlaybackInfo info)
+        public PlaybackStage PlaybackStage { get; internal set; }
+
+        public PlaybackManager(PlaybackInfo info, PlaybackStage playbackStage)
         {
-            PlaybackInfo = info;  
-            if(info.StageType == PlaybackStage.StageType.Audio || info.StageType == PlaybackStage.StageType.None)
+            PlaybackInfo = info;
+            PlaybackStage = playbackStage;
+            if (info.StageType == PlaybackStage.StageType.Audio || info.StageType == PlaybackStage.StageType.None)
             {
-                m_Player = new AudioPlayer(info);
+                m_Player = new AudioPlayer(info, PlaybackStage.spectrumAnalyzer);
                 m_ProgressDataProvider = new AudioProgressDataProvider((AudioPlayer)m_Player);
+                
             }
             else if (info.StageType == PlaybackStage.StageType.Video)
             {

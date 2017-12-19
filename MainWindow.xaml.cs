@@ -25,7 +25,17 @@ namespace EventRiteComposer
         public static event EventHandler<VolumeValueChangedEventArgs> OnSeekPositionChanged = (object sender, VolumeValueChangedEventArgs e) => { };
         public static event EventHandler<KeyEventArgs> OnWindowKeyDown = (object sender, System.Windows.Input.KeyEventArgs e) => { };
         public static event EventHandler<RoutedEventArgs> OnButtonStopPressed = (object sender, RoutedEventArgs e) => { };
-        public static ProgressDataProvider ProgressDataProvider;
+        public static ProgressDataProvider m_ProgressDataProvider;
+        public static ProgressDataProvider ProgressDataProvider
+        {
+            set
+            {
+                m_ProgressDataProvider = value;
+                if(m_ProgressDataProvider is AudioProgressDataProvider)
+                    instance.waveformTimeline.RegisterSoundPlayer(((AudioProgressDataProvider)m_ProgressDataProvider).AudioPlayer);
+            }
+            get { return m_ProgressDataProvider; }
+        }
         private DispatcherTimer dispatcherTimer;
         string m_IniPath = System.IO.Path.Combine(Environment.CurrentDirectory, "settings.ini");
 
@@ -245,12 +255,12 @@ namespace EventRiteComposer
                 return;
             }
             if (e.ChangedButton == MouseButton.Left)
-                {
-                    this.CaptureMouse();
-                    this.m_IsDragInProgress = true;
-                    // 
-                    this.m_FormMousePosition = e.GetPosition((UIElement)this);
-                }
+            {
+                this.CaptureMouse();
+                this.m_IsDragInProgress = true;
+                // 
+                this.m_FormMousePosition = e.GetPosition((UIElement)this);
+            }
             base.OnMouseDown(e);
         }
 

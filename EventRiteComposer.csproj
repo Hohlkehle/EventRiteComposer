@@ -62,6 +62,10 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="WPFSoundVisualizationLib, Version=0.4.6562.33733, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\WPFSoundVisualizationLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -121,6 +125,8 @@
     <Compile Include="Windows\OptionsWindow.xaml.cs">
       <DependentUpon>OptionsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WPFSoundVisualizationLibrary\NAudioEngine.cs" />
+    <Compile Include="WPFSoundVisualizationLibrary\SampleAggregator.cs" />
     <Page Include="NAudio\AudioPlayback\DirectSoundOutSettingsPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -242,9 +248,7 @@
   <ItemGroup>
     <Resource Include="Resources\Icons\soundforge2_icon.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="libs\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Icons\button-pause-icon.png" />
     <Resource Include="Resources\Icons\button-play-icon.png" />
@@ -258,6 +262,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\Toolbar-Regular-Delete-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="libs\WPFSoundVisualizationLib.dll" />
+    <Content Include="libs\WPFSoundVisualizationLib.pdb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

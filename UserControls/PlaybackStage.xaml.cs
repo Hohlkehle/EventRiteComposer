@@ -1,5 +1,6 @@
 ﻿using EventRiteComposer.Core;
 using EventRiteComposer.Data;
+using EventRiteComposer.WPFSoundVisualizationLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -112,7 +113,7 @@ namespace EventRiteComposer
                 m_PlaybackInfo = value;
                 stageType = (System.IO.File.Exists(PlaybackInfo.MediaFilePath)) ? m_PlaybackInfo.StageType : StageType.None;
 
-                PlaybackManager = new PlaybackManager(PlaybackInfo);
+                PlaybackManager = new PlaybackManager(PlaybackInfo, this);
             }
         }
 
@@ -148,6 +149,8 @@ namespace EventRiteComposer
 
             OnPlay += (PlaybackStage sender, PlaybackStageEventArgs e) =>
             {
+                
+
                 if (sender != this && sender.IsStopOthers && IsStopOthers && PlaybackManager.IsPlaying)
                     Stop();
                 else if (sender != this && (sender.IsStopOthers || sender.PlaybackInfo.StageType == StageType.Video) && PlaybackInfo.StageType == StageType.Video && PlaybackManager.IsPlaying)

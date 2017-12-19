@@ -13,25 +13,26 @@ namespace EventRiteComposer.Data
 
         public override TimeSpan CurrentTime
         {
-            get => m_AudioPlayer != null ? m_AudioPlayer.CurrentTime : TimeSpan.Zero;
+            get => AudioPlayer != null ? AudioPlayer.CurrentTime : TimeSpan.Zero;
             set => base.CurrentTime = value;
         }
 
         public override TimeSpan TotalTime
         {
-            get => m_AudioPlayer != null ? m_AudioPlayer.TotalTime : TimeSpan.Zero;
+            get => AudioPlayer != null ? AudioPlayer.TotalTime : TimeSpan.Zero;
             set => base.TotalTime = value;
         }
 
         public override double Progress
         {
-            get => m_AudioPlayer != null ? m_AudioPlayer.Progress : 0;
+            get => AudioPlayer != null ? AudioPlayer.Progress : 0;
             set => base.Progress = value;
         }
+        public AudioPlayer AudioPlayer { get => m_AudioPlayer; set => m_AudioPlayer = value; }
 
         public AudioProgressDataProvider(AudioPlayer audioPlayer)
         {
-            m_AudioPlayer = audioPlayer;
+            AudioPlayer = audioPlayer;
         }
 
 

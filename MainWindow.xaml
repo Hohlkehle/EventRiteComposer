@@ -1,8 +1,9 @@
 ﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:EventRiteComposer" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:UserControls="clr-namespace:EventRiteComposer.UserControls" mc:Ignorable="d" x:Class="EventRiteComposer.MainWindow"
-        Title="Event Rite Composer" Height="555" MaxHeight="555" Width="797" MaxWidth="797" KeyDown="Window_KeyDown" Closed="Window_Closed" BorderThickness="0,0,0,0" Icon="Resources\Icons\audio_file.png"
+        xmlns:local="clr-namespace:EventRiteComposer" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:UserControls="clr-namespace:EventRiteComposer.UserControls"
+    xmlns:WPFSoundVisualizationLib="clr-namespace:WPFSoundVisualizationLib;assembly=WPFSoundVisualizationLib" mc:Ignorable="d" x:Class="EventRiteComposer.MainWindow"
+        Title="Event Rite Composer" Height="570" MaxHeight="570" Width="797" MaxWidth="797" KeyDown="Window_KeyDown" Closed="Window_Closed" BorderThickness="0,0,0,0" Icon="Resources\Icons\audio_file.png"
 
 
     >
@@ -23,14 +24,19 @@
     <Border BorderThickness="8" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" >
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="413*"/>
-                <RowDefinition Height="63*"/>
+                <RowDefinition Height="413"/>
+                <RowDefinition Height="60"/>
                 <RowDefinition Height="32*"/>
             </Grid.RowDefinitions>
-            <Button Content="Exit" HorizontalAlignment="Left" Margin="665,3.125,0,0" VerticalAlignment="Top" Width="85" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="#FF00B9FF" Click="ButtonExit_Click" Height="24" Grid.Row="2" />
+            <Button Content="Exit" HorizontalAlignment="Left" Margin="698,3,0,0" VerticalAlignment="Top" Width="65" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="#FF00B9FF" Click="ButtonExit_Click" Height="38" Grid.Row="2" />
             <local:GridStack x:Name="GridStack1" HorizontalAlignment="Left" Margin="0,0,-5.4,0" VerticalAlignment="Top" Height="410" Loaded="GridStack1_Loaded"/>
 
             <Grid Grid.Row="1">
+
+                <WPFSoundVisualizationLib:WaveformTimeline x:Name="waveformTimeline" Margin="104,58,163,-43" IsHitTestVisible="False"
+                    BorderThickness="1" LeftLevelBrush="#FF5858FF" RightLevelBrush="#FF5858FF" AllowRepeatRegions="False" Background="#FFD7D7D7"/>
+
+                
                 <Border x:Name="BorderContour" Background="#CC1a8cff" BorderThickness="2" Visibility="Visible" Margin="0,410,-0.4,0" Height="69" VerticalAlignment="Top" Grid.RowSpan="3"/>
                 <Border x:Name="BorderBackground" BorderThickness="1,1,1,1" Margin="0,0,-0.4,0" Background="#C8141418" Height="58" VerticalAlignment="Top" />
 
@@ -50,6 +56,9 @@
 
                 <Slider Margin="621,30.108,9.6,11.4" x:Name="SliderVolume" ValueChanged="SliderVolume_ValueChanged" Maximum="1" LargeChange="0.2" TickFrequency="0.1" Value="0.5" VerticalAlignment="Center" Height="21" Grid.Row="1" />
                 <ProgressBar x:Name="ProgressBarVolume" Margin="621,30.108,9.6,0" Visibility="Visible" IsHitTestVisible="False" Value="0.5" Maximum="1" LargeChange="0.2" Height="21" VerticalAlignment="Top" Grid.Row="1"/>
+
+
+                
             </Grid>
 
             <Button x:Name="OpenPlayers" Visibility="Hidden" Content="Open Players" HorizontalAlignment="Left" Margin="10,14.6,0,-0.133" VerticalAlignment="Top" Width="84" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="#FF00B9FF" Click="OpenPlayers_Click" Grid.Row="2"/>
