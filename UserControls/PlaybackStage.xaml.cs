@@ -3,6 +3,7 @@ using EventRiteComposer.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,15 +40,12 @@ namespace EventRiteComposer
 
         public delegate void PlaybackStageEventHandler(PlaybackStage sender, PlaybackStageEventArgs e);
         public static event PlaybackStageEventHandler OnPlay, OnVideoPropertyChanged, OnStateChanged;
-        static string[] audioExtensions = { ".WAV", ".MID", ".MIDI", ".WMA", ".MP3", ".OGG", ".RMA" };
-        static string[] videoExtensions = { ".AVI", ".MP4", ".DIVX", ".WMV" };
-        static string[] imageExtensions = { ".PNG", ".JPG", ".JPEG", ".BMP", ".GIF" };
 
-        StageType m_StageType;
+        private StageType m_StageType;
         public PlaybackInfo audioPlayer { protected set; get; }
         public PlaybackInfo videoPlayer { protected set; get; }
-        PlaybackState m_PlaybackState = PlaybackState.Stoped;
-        LinearGradientBrush gradientBrush, gradientHoverBrush, gradientActiveBrush;
+        private PlaybackState m_PlaybackState = PlaybackState.Stoped;
+        private LinearGradientBrush m_GradientBrush, m_GradientHoverBrush, m_GradientActiveBrush, m_GradientInactiveBrush;
         private PlaybackManager m_PlaybackManager;
 
         MainWindow mainWindow { get { return MainWindow.instance; } }
@@ -55,7 +53,7 @@ namespace EventRiteComposer
 
         public int StackId { set; get; }
         public int IsSet { set; get; }
-        public bool IsStopOthers { get { return CheckBoxStopOther.IsChecked == true ? true : false; } }
+        public bool IsStopOthers { get { return CheckBoxStopOther.IsChecked.Value; } }
         public string KeyName { set; get; }
 
         public StageType stageType
@@ -112,7 +110,7 @@ namespace EventRiteComposer
             set
             {
                 m_PlaybackInfo = value;
-                stageType = m_PlaybackInfo.StageType;
+                stageType = (System.IO.File.Exists(PlaybackInfo.MediaFilePath)) ? m_PlaybackInfo.StageType : StageType.None;
 
                 PlaybackManager = new PlaybackManager(PlaybackInfo);
             }
@@ -156,6 +154,8 @@ namespace EventRiteComposer
                     Stop();
             };
 
+            
+
             /*if (mainWindow != null)
             {
                 mainWindow.KeyDown += mainWindow_KeyDown;
@@ -171,9 +171,10 @@ namespace EventRiteComposer
                 }));
             }*/
 
-            gradientBrush = ((LinearGradientBrush)Border.Background).Clone();
-            gradientHoverBrush = new LinearGradientBrush(Color.FromRgb(100, 90, 190), Color.FromRgb(60, 130, 210), new Point(0.5, 0), new Point(0.5, 1));
-            gradientActiveBrush = new LinearGradientBrush(Color.FromRgb(170, 130, 220), Color.FromRgb(90, 170, 230), new Point(0.5, 1), new Point(0.5, 0));
+            m_GradientBrush = ((LinearGradientBrush)Border.Background).Clone();
+            m_GradientHoverBrush = new LinearGradientBrush(Color.FromRgb(100, 90, 190), Color.FromRgb(60, 130, 210), new Point(0.5, 0), new Point(0.5, 1));
+            m_GradientActiveBrush = new LinearGradientBrush(Color.FromRgb(170, 130, 220), Color.FromRgb(90, 170, 230), new Point(0.5, 1), new Point(0.5, 0));
+            m_GradientInactiveBrush = new LinearGradientBrush(Color.FromRgb(61, 58, 58), Color.FromRgb(68, 68, 68), new Point(0.5, 1), new Point(0.5, 0));
 
 
             OnStateChanged += PlaybackStage_OnStateChanged;
@@ -236,36 +237,43 @@ namespace EventRiteComposer
         {
             if (CommandHelper.IsAudioFile(file))
             {
-                var pi = new PlaybackInfo(StackId) {
+                PlaybackManager.Stop();
+                var pi = new PlaybackInfo(StackId)
+                {
                     MediaFilePath = file,
-                    StageType = StageType.Audio
+                    StageType = StageType.Audio,
+                    IsExclusive = PlaybackInfo.IsExclusive
                 };
                 PlaybackInfo = pi;
 
                 TextBlockAudioFileName.Text = System.IO.Path.GetFileNameWithoutExtension(file);
                 stageType = PlaybackStage.StageType.Audio;
                 audioPlayer.MediaFilePath = audioFile = file;
-
             }
             else if (CommandHelper.IsVideoFile(file))
             {
+                PlaybackManager.Stop();
                 var pi = new PlaybackInfo(StackId)
                 {
                     MediaFilePath = file,
-                    StageType = StageType.Video
+                    StageType = StageType.Video,
+                    IsExclusive = PlaybackInfo.IsExclusive
                 };
                 PlaybackInfo = pi;
 
                 TextBlockAudioFileName.Text = System.IO.Path.GetFileNameWithoutExtension(file);
                 stageType = PlaybackStage.StageType.Video;
                 videoPlayer.MediaFilePath = videoFile = file;
-
+            }
+            else if (PlaybackInfo.StageType != StageType.None)
+            {
+                SystemSounds.Exclamation.Play();
             }
             else
             {
+                SystemSounds.Exclamation.Play();
                 TextBlockAudioFileName.Text = "Error: Unsuported format!";
                 PlaybackInfo.StageType = StageType.None;
-
             }
 
             InvalidateStageState();
@@ -284,18 +292,24 @@ namespace EventRiteComposer
                     ImageAudio.Opacity = 0d;
                     ImageVideo.Opacity = 0d;
                     ImageNone.Opacity = 100d;
+                    Border.Background = m_GradientInactiveBrush;
                     break;
                 case StageType.Audio:
                     ImageAudio.Opacity = 100d;
                     ImageVideo.Opacity = 0d;
                     ImageNone.Opacity = 0d;
+                    Border.Background = m_GradientBrush;
                     break;
                 case StageType.Video:
                     ImageVideo.Opacity = 100d;
                     ImageAudio.Opacity = 0d;
                     ImageNone.Opacity = 0d;
+                    Border.Background = m_GradientBrush;
                     break;
             }
+
+            if (PlaybackInfo != null)
+                CheckBoxStopOther.IsChecked = PlaybackInfo.IsExclusive;
         }
 
         public void Play()
@@ -311,17 +325,17 @@ namespace EventRiteComposer
             if (PlaybackManager.IsPlaying)
             {
                 PlaybackManager.Pause();
-                Border.Background = gradientHoverBrush;
+                Border.Background = m_GradientHoverBrush;
             }
             else
             {
                 PlaybackManager.Play();
-                Border.Background = gradientActiveBrush;
+                Border.Background = m_GradientActiveBrush;
 
                 OnPlay?.Invoke(this, new PlaybackStageEventArgs(PlaybackState.Paused));
             }
 
-            Border.Background = gradientActiveBrush;
+            Border.Background = m_GradientActiveBrush;
 
             playbackState = PlaybackState.Playing;
         }
@@ -337,13 +351,13 @@ namespace EventRiteComposer
             //    videoPlayer.Stop();
 
 
-            Border.Background = gradientBrush;
+            Border.Background = m_GradientBrush;
 
             playbackState = PlaybackState.Stoped;
 
             ///System.Windows.SystemColors.MenuHighlightBrush;
         }
-        
+
         void PlaybackStage_OnStateChanged(PlaybackStage sender, PlaybackStageEventArgs e)
         {
             if (sender == this)
@@ -436,6 +450,12 @@ namespace EventRiteComposer
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         { }
 
+        private void CheckBoxStopOther_Click(object sender, RoutedEventArgs e)
+        {
+            if (PlaybackInfo != null)
+                PlaybackInfo.IsExclusive = CheckBoxStopOther.IsChecked.Value;
+        }
+
         void Dispatcher_ShutdownStarted(object sender, EventArgs e)
         {
             if (mainWindow != null)
@@ -476,7 +496,7 @@ namespace EventRiteComposer
 
         private void Grid_MouseEnter(object sender, MouseEventArgs e)
         {
-            Border.Background = gradientHoverBrush;
+            Border.Background = m_GradientHoverBrush;
 
             //switch (playbackState)
             //{
@@ -498,11 +518,15 @@ namespace EventRiteComposer
         {
             if (PlaybackManager.IsPlaying)
             {
-                Border.Background = gradientActiveBrush;
+                Border.Background = m_GradientActiveBrush;
+            }
+            else if (PlaybackInfo.StageType != StageType.None)
+            {
+                Border.Background = m_GradientBrush;
             }
             else
             {
-                Border.Background = gradientBrush;
+                Border.Background = m_GradientInactiveBrush;
             }
             //switch (playbackState)
             //{

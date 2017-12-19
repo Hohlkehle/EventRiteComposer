@@ -26,9 +26,12 @@ namespace EventRiteComposer.Data
         private string m_mediaFilePath = "media.ogg";
         [XmlIgnore]
         protected string m_path = @"winamp\winamp.exe";
+        [XmlIgnore]
         private EventRiteComposer.PlaybackStage.StageType m_StageType = EventRiteComposer.PlaybackStage.StageType.None;
+        [XmlIgnore]
         private int m_StackId;
-
+        [XmlIgnore]
+        private bool m_IsExclusive = true;
         [XmlElement]
         public EventRiteComposer.PlaybackStage.StageType StageType
         {
@@ -57,10 +60,10 @@ namespace EventRiteComposer.Data
             get { return m_StackId; }
             set { m_StackId = value; }
         }
-
+        [XmlIgnore]
         public int KeyPressDelay { get { return MainWindow.instance.Preferences.KeyPressDelay.Value; } }
-
-
+        [XmlElement]
+        public bool IsExclusive { get => m_IsExclusive; set => m_IsExclusive = value; }
 
         public PlaybackInfo()
         {

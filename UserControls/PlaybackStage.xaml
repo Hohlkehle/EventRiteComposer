@@ -21,7 +21,7 @@
                     <GradientStop Color="#FF337FCB" Offset="1"/>
                 </LinearGradientBrush>
             </Border.Background>
-            <CheckBox x:Name="CheckBoxStopOther" Content="Exclusive" Margin="44,9,20,71" IsChecked="True" Foreground="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" FontSize="9"/>
+            <CheckBox x:Name="CheckBoxStopOther" Content="Exclusive" Margin="44,9,20,71" IsChecked="True" Foreground="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" FontSize="9" Click="CheckBoxStopOther_Click"/>
 
         </Border>
 
