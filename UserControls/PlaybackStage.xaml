@@ -28,7 +28,7 @@
 
         <WPFSoundVisualizationLib:SpectrumAnalyzer x:Name="spectrumAnalyzer" 
                                                    Margin="0" BarCount="25" PeakFallDelay="6" BarSpacing="1"
-                                                   MaximumFrequency="16000" MinimumFrequency="200" IsFrequencyScaleLinear="True" AveragePeaks="True"/>
+                                                   MaximumFrequency="12000" MinimumFrequency="150" IsFrequencyScaleLinear="True" AveragePeaks="True"/>
         
         <Button x:Name="ButtonSelectAudioFile" Content="" HorizontalAlignment="Left" Margin="18,70,0,0" Width="15" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" ToolTip="Select Audio File" Height="15" VerticalAlignment="Top" Visibility="Hidden"/>
         <Image x:Name="ImageAudio" HorizontalAlignment="Left" Height="36" Margin="10,10,0,0" VerticalAlignment="Top" Width="32" Source="/EventRiteComposer;component/Resources/Icons/soundforge2_icon.jpg" Opacity="0.105">
